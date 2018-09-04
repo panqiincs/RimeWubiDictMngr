@@ -118,6 +118,7 @@ int RimeWubiDictMngr::extendMainDict(const QString &filename, RimeWubiDictMngr::
         if (word_set.contains(word)) {
             weight = word_freq.value(word);
         } else {
+            qDebug() << "In extendMainDict, not in word freq:" << word;
             if (mode == ADD_HIGHFREQ) {
                 continue;
             } else if (mode == ADD_EVERYONE) {
@@ -243,7 +244,8 @@ int RimeWubiDictMngr::loadUserWords(const QString &filename)
         QString line = in.readLine();
         QStringList list = line.split(QRegExp("\\s+"), QString::SkipEmptyParts);
         for (auto &word : list) {
-            if (!isWordValid(word) || user_words.contains(word)) {
+            if (!isWordValid(word) || isHanzi(word) || user_words.contains(word)) {
+                qDebug() << "In loadUserWords: ignore the word" << word;
                 continue;
             }
             user_words.append(word);
