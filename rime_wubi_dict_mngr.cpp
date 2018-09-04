@@ -5,6 +5,30 @@ RimeWubiDictMngr::RimeWubiDictMngr()
 
 }
 
+bool isSmaller(const QPair<QString, QPair<QString, size_t>> &p1,
+               const QPair<QString, QPair<QString, size_t>> &p2)
+{
+    QString code1   = p1.second.first;
+    QString code2   = p2.second.first;
+    if (code1 < code2) {
+        return true;
+    } else if (code1 > code2) {
+        return false;
+    }
+
+    size_t  weight1 = p1.second.second;
+    size_t  weight2 = p2.second.second;
+    if (weight1 > weight2) {
+        return true;
+    } else if (weight1 < weight2) {
+        return false;
+    }
+
+    QString word1   = p1.first;
+    QString word2   = p2.first;
+    return (word1 < word2);
+}
+
 int RimeWubiDictMngr::loadMainDict(const QString &filename)
 {
     QFile infile(filename);
@@ -53,6 +77,14 @@ int RimeWubiDictMngr::loadMainDict(const QString &filename)
     infile.close();
 
     return main_dict.size();
+}
+
+int RimeWubiDictMngr::saveMainDict(const QString &filename)
+{
+    std::sort(main_dict.begin(), main_dict.end(), isSmaller);
+    int ret = saveDict(main_dict, filename);
+
+    return ret;
 }
 
 int RimeWubiDictMngr::extendMainDict(const QString &filename, RimeWubiDictMngr::add_mode_t mode)

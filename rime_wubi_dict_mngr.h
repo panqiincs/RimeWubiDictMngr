@@ -43,7 +43,7 @@ public:
 
 public:
     int loadMainDict(const QString &filename);
-    int saveMainDict(const QString &filename);  // TODO
+    int saveMainDict(const QString &filename);
     int saveUserDict(const QString &filename);  // TODO
 
     int extendMainDict(const QString &filename, add_mode_t mode);
