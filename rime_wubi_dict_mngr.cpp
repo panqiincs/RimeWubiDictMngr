@@ -235,22 +235,23 @@ int RimeWubiDictMngr::loadUserWords(const QString &filename)
     }
 
     user_words.clear();
+    user_words_set.clear();
 
     QTextStream in(&infile);
     while (!in.atEnd()) {
         QString line = in.readLine();
         QStringList list = line.split(QRegExp("\\s+"), QString::SkipEmptyParts);
         for (auto &word : list) {
-            if (!isWordValid(word) || isHanzi(word) || user_words.contains(word)) {
-                //qDebug() << "In loadUserWords: ignore the word" << word;
+            if (!isWordValid(word) || isHanzi(word) || user_words_set.contains(word)) {
                 continue;
             }
             user_words.append(word);
+            user_words_set.insert(word);
         }
     }
     infile.close();
 
-    return user_words.size();
+    return user_words_set.size();
 }
 
 QStringList RimeWubiDictMngr::getHanziAllCode(const QString &hz)

@@ -14,7 +14,6 @@
 #include <QList>
 #include <QRegExp>
 #include <QDebug>
-#include <QTime>
 
 /*
  * 命名规范：
@@ -73,7 +72,8 @@ private:
     QMap<QString, size_t> word_freq;
     QSet<QString>         word_set;
 
-    QStringList user_words;
+    QStringList   user_words;
+    QSet<QString> user_words_set;
 
     QVector<QPair<QString, QPair<QString, size_t>>> main_dict;
     QSet<QString>                                   main_dict_set;
