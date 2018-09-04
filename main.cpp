@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
     RimeWubiDictMngr rwdm;
     int n = rwdm.loadMainDict("./core/wubi06.dict.yaml");
     qDebug() << "In main(), loaded" << n << "items from dict.";
-    rwdm.saveMainDict("out.txt");
+    //rwdm.saveMainDict("out.txt");
 
     return a.exec();
 }

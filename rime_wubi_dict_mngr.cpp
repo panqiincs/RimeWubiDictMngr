@@ -46,6 +46,10 @@ int RimeWubiDictMngr::loadMainDict(const QString &filename)
     // 添加编码表中的所有汉字到字典
     for (auto it = hanzi_code.cbegin(); it != hanzi_code.cend(); ++it) {
         QString hanzi = it.key();
+        if (main_dict_set.contains(hanzi)) {
+            continue;
+        }
+
         QVector<QPair<QString, size_t> > code_weight = getHanziCodeWeight(hanzi);
         for (auto &cw : code_weight) {
             QPair<QString, QPair<QString, size_t>> item(hanzi, cw);
