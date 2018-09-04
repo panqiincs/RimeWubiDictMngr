@@ -88,3 +88,30 @@ int RimeWubiDictMngr::loadUserWords(const QString &filename)
 
     return user_words.size();
 }
+
+QStringList RimeWubiDictMngr::getHanziAllCode(const QString &hz)
+{
+    Q_ASSERT(hz.length() == 1);
+
+    QStringList res;
+
+    for (auto it = hanzi_code.lowerBound(hz); it != hanzi_code.upperBound(hz); ++it) {
+        res.append(it.value());
+    }
+
+    return res;
+}
+
+QString RimeWubiDictMngr::getHanziFullcode(const QString &hz)
+{
+    QString res;
+
+    QStringList code_list = getHanziAllCode(hz);
+    for (auto it = code_list.cbegin(); it != code_list.cend(); ++it) {
+        if (it->length() > res.length()) {
+            res = *it;
+        }
+    }
+
+    return res;
+}
