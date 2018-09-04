@@ -5,6 +5,42 @@ RimeWubiDictMngr::RimeWubiDictMngr()
 
 }
 
+int RimeWubiDictMngr::loadMainDict(const QString &filename)
+{
+    QFile infile(filename);
+    if (!infile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "Openning file" << filename <<  "failed!";
+        return -1;
+    }
+
+    main_dict.clear();
+    main_dict_set.clear();
+
+    QTextStream in(&infile);
+    while (!in.atEnd()) {
+        QString line = in.readLine();
+        QStringList list = line.split(QRegExp("\\s+"), QString::SkipEmptyParts);
+        if (list.size() != 3) {
+            continue;
+        }
+        QString word = list[0];
+        QString code = list[1].toLower();
+        if (!isWordValid(word) || !isCodeValid(code)) {
+            qDebug() << "In loadMainDict(), invaid dict item:" << line;
+            continue;
+        }
+
+        size_t weight = list[2].toULong();
+        QPair<QString, size_t> code_weight(code, weight);
+        QPair<QString, QPair<QString, size_t>> item(word, code_weight);
+        main_dict.push_back(item);
+        main_dict_set.insert(word);
+    }
+    infile.close();
+
+    return main_dict.size();
+}
+
 QVector<QPair<QString, size_t> > RimeWubiDictMngr::calWordCodeWeight(const QString &wd, RimeWubiDictMngr::add_mode_t mode)
 {
     QVector<QPair<QString, size_t>> res;
