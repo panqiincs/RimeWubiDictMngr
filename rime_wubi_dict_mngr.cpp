@@ -98,9 +98,38 @@ int RimeWubiDictMngr::extendMainDict(const QString &filename, RimeWubiDictMngr::
         return -1;
     }
 
-    for (auto word : user_words) {
+    size_t old_size = main_dict_set.size();
 
+    for (auto word : user_words) {
+        if (main_dict_set.contains(word)) {
+            continue;
+        }
+
+        Q_ASSERT(word.length() > 1);
+
+        size_t weight;
+        if (word_set.contains(word)) {
+            weight = word_freq.value(word);
+        } else {
+            if (mode == ADD_HIGHFREQ) {
+                continue;
+            } else if (mode == ADD_EVERYONE) {
+                weight = 1000;
+            } else {
+
+            }
+        }
+
+        QString code = getCizuCode(word);
+        QPair<QString, size_t> code_weight(code, weight);
+        QPair<QString, QPair<QString, size_t>> item(word, code_weight);
+        main_dict.push_back(item);
+        main_dict_set.insert(word);
     }
+
+    size_t new_size = main_dict_set.size();
+
+    return (new_size - old_size);
 }
 
 QVector<QPair<QString, size_t> > RimeWubiDictMngr::getHanziCodeWeight(const QString &hz)
