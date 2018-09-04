@@ -95,6 +95,13 @@ int RimeWubiDictMngr::saveMainDict(const QString &filename)
     return ret;
 }
 
+int RimeWubiDictMngr::saveUserDict(const QString &filename)
+{
+    int ret = saveDict(user_dict, filename);
+
+    return ret;
+}
+
 int RimeWubiDictMngr::extendMainDict(const QString &filename, RimeWubiDictMngr::add_mode_t mode)
 {
     Q_ASSERT(!word_freq.empty());
@@ -105,6 +112,8 @@ int RimeWubiDictMngr::extendMainDict(const QString &filename, RimeWubiDictMngr::
         qDebug() << "In extendMainDict(), load user words failed!";
         return -1;
     }
+
+    user_dict.clear();
 
     size_t old_size = main_dict_set.size();
 
@@ -117,7 +126,6 @@ int RimeWubiDictMngr::extendMainDict(const QString &filename, RimeWubiDictMngr::
         if (word_set.contains(word)) {
             weight = word_freq.value(word);
         } else {
-            //qDebug() << "In extendMainDict()," << word << "not in word freq";
             if (mode == ADD_HIGHFREQ) {
                 continue;
             } else if (mode == ADD_EVERYONE) {
@@ -128,6 +136,9 @@ int RimeWubiDictMngr::extendMainDict(const QString &filename, RimeWubiDictMngr::
         QString code = getCizuCode(word);
         QPair<QString, size_t> code_weight(code, weight);
         QPair<QString, QPair<QString, size_t>> item(word, code_weight);
+
+        user_dict.push_back(item);
+
         main_dict.push_back(item);
         main_dict_set.insert(word);
     }

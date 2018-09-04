@@ -13,6 +13,12 @@ int main(int argc, char *argv[])
     n = rwdm.extendMainDict("./user/total.txt", RimeWubiDictMngr::ADD_HIGHFREQ);
     qDebug() << "In main(), loaded" << n << "items from user words.";
 
+    n = rwdm.extendMainDict("./user/names.txt", RimeWubiDictMngr::ADD_EVERYONE);
+    qDebug() << "In main(), loaded" << n << "items from user words";
+
+    n = rwdm.saveUserDict("./names.dict.txt");
+    qDebug() << "In main(), saved" << n << "items to file";
+
     n = rwdm.saveMainDict("out.txt");
     qDebug() << "In main(), saved" << n << "items from main dict";
 
