@@ -53,7 +53,7 @@ private:
 
     int loadHanziCode(const QString &filename);
     int loadWordFreq(const QString &filename);
-    int loadUserWords(const QString &filename);  // TODO
+    int loadUserWords(const QString &filename);
 
     size_t getWordFreq(const QString &wd);    // TODO
     bool   isInWordFreq(const QString &wd);   // TODO
@@ -73,6 +73,8 @@ private:
 
     QMap<QString, size_t> word_freq;
     QSet<QString>         word_set;
+
+    QStringList user_words;
 
     QVector<QPair<QString, QPair<QString, size_t>>> main_dict;
     QSet<QString>                                   main_dict_set;

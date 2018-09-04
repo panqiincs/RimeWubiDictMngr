@@ -62,3 +62,29 @@ int RimeWubiDictMngr::loadWordFreq(const QString &filename)
 
     return word_set.size();
 }
+
+int RimeWubiDictMngr::loadUserWords(const QString &filename)
+{
+    QFile infile(filename);
+    if (!infile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "In loadWordFreq(), openning file" << filename <<  "failed!";
+        return -1;
+    }
+
+    user_words.clear();
+
+    QTextStream in(&infile);
+    while (!in.atEnd()) {
+        QString line = in.readLine();
+        QStringList list = line.split(QRegExp("\\s+"), QString::SkipEmptyParts);
+        for (auto &word : list) {
+            if (!isWordValid(word) || user_words.contains(word)) {
+                continue;
+            }
+            user_words.append(word);
+        }
+    }
+    infile.close();
+
+    return user_words.size();
+}
