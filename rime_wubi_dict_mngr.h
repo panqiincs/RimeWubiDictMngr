@@ -59,9 +59,9 @@ private:
     QString     getHanziFullcode(const QString &hz);
     QString     getCizuCode(const QString &cz);
 
-    bool isHanzi(const QString &hz);       // TODO
-    bool isCizu(const QString &wd);        // TODO
     bool isWordValid(const QString &wd);
+    bool isHanzi(const QString &wd);
+    bool isCizu(const QString &wd);
 
 private:
     QMultiMap<QString, QString> hanzi_code;
