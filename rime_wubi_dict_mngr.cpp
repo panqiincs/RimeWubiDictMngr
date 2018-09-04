@@ -5,6 +5,47 @@ RimeWubiDictMngr::RimeWubiDictMngr()
 
 }
 
+QVector<QPair<QString, size_t> > RimeWubiDictMngr::calWordCodeWeight(const QString &wd, RimeWubiDictMngr::add_mode_t mode)
+{
+    QVector<QPair<QString, size_t>> res;
+
+    size_t freq = word_freq.value(wd);
+    QPair<QString, size_t> item;
+
+    if (isHanzi(wd)) {  // 单字
+        QStringList all_code = getHanziAllCode(wd);
+        // 找到最小长度的编码
+        int min_len = 5;
+        for (auto &code : all_code) {
+            if (code.length() < min_len) {
+                min_len = code.length();
+            }
+        }
+        Q_ASSERT(min_len > 0 && min_len < 5);
+
+        // 编码最短的权重最大，编码最长权重越小
+        for (auto &code : all_code) {
+            float factor = 1.0 - (code.length()-min_len) * 0.2;
+            size_t weight = (size_t)(factor * freq);
+            if (weight < 1000) {
+                weight = 0;
+            }
+
+            item.first = code;
+            item.second = weight;
+            res.push_back(item);
+        }
+    } else {  // 词组
+        QString one_code = getCizuCode(wd);
+
+        item.first = one_code;
+        item.second = freq;
+        res.push_back(item);
+    }
+
+    return res;
+}
+
 int RimeWubiDictMngr::loadHanziCode(const QString &filename)
 {
     QFile infile(filename);
