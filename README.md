@@ -20,9 +20,9 @@ Rime的五笔输入法有个优点，它的码表中包含权重（weight）信�
 
 ### 必需文件
 
-该工具需要两个文件：
+#### 五笔编码表
 
-1. `hanzi_code.txt`：五笔编码表，不同的版本（86版、98版和新世纪版）对应不同的编码表。我学的是新世纪版五笔，需要生成其它版本的码表时，替换编码表即可。码表部分内容如下：
+不同的版本（86版、98版和新世纪版）对应不同的编码表。我学的是新世纪版五笔，需要生成其它版本的码表时，替换编码表即可。码表部分内容如下：
 
 ```yaml
 工	a
@@ -34,7 +34,9 @@ Rime的五笔输入法有个优点，它的码表中包含权重（weight）信�
 # 由于版权原因，后面的内容不展示
 ```
 
-2. `word_freq.txt`：词频表，字词使用频率信息。词频表来自[BLCU Chinese Corpus](https://www.plecoforums.com/threads/word-frequency-list-based-on-a-15-billion-character-corpus-bcc-blcu-chinese-corpus.5859/)和[webdict](https://github.com/ling0322/webdict)。BLCU的词频表很大很权威，分别统计自文学、新闻、博客、技术和微博语料，但合并的总表有问题。于是我自己将几个分表和webdict合并得到了一个总表，有超过150万个词。舍弃词频小于1000的词语，最后剩下141810个。词频表部分内容如下：
+#### 词频表
+
+词频表是字词使用频率的信息，词频越高，字词越常见。词频表来自[BLCU Chinese Corpus](https://www.plecoforums.com/threads/word-frequency-list-based-on-a-15-billion-character-corpus-bcc-blcu-chinese-corpus.5859/)和[webdict](https://github.com/ling0322/webdict)。BLCU的词频表很大很权威，分别统计自文学、新闻、博客、技术和微博语料，但合并的总表有问题。于是我自己将几个分表和webdict合并得到了一个总表，有超过150万个词。舍弃词频小于1000的词语，最后剩下141810个。词频表部分内容如下：
 
 ```yaml
 的	1017399760
