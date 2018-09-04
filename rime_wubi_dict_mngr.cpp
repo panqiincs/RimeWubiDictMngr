@@ -217,8 +217,3 @@ bool RimeWubiDictMngr::isHanzi(const QString &wd)
     return (wd.length() == 1);
 }
 
-bool RimeWubiDictMngr::isCizu(const QString &wd)
-{
-    return (wd.length() > 1);
-}
-

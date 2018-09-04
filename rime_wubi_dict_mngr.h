@@ -61,7 +61,6 @@ private:
 
     bool isWordValid(const QString &wd);
     bool isHanzi(const QString &wd);
-    bool isCizu(const QString &wd);
 
 private:
     QMultiMap<QString, QString> hanzi_code;
