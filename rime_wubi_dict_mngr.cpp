@@ -2,7 +2,10 @@
 
 RimeWubiDictMngr::RimeWubiDictMngr()
 {
-
+    int n = loadHanziCode("./core/hanzi_code.txt");
+    qDebug() << "In constructor, loaded" << n << "hanzi code items.";
+    n = loadWordFreq("./core/word_freq_total_above_1k.txt");
+    qDebug() << "In constructor, loaded" << n << "word freq items.";
 }
 
 bool isSmaller(const QPair<QString, QPair<QString, size_t>> &p1,
