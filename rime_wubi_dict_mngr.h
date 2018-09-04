@@ -55,10 +55,6 @@ private:
     int loadWordFreq(const QString &filename);
     int loadUserWords(const QString &filename);
 
-    size_t getWordFreq(const QString &wd);    // TODO
-    bool   isInWordFreq(const QString &wd);   // TODO
-    bool   isInHanziCode(const QString &hz);  // TODO
-
     QStringList getHanziAllCode(const QString &hz);   // TODO
     QString     getHanziFullcode(const QString &hz);  // TODO
     QString     getCizuCode(const QString &cz);       // TODO
