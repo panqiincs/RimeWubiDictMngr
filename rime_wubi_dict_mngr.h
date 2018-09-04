@@ -51,8 +51,8 @@ public:
 private:
     QVector<QPair<QString, size_t>> calWordCodeWeight(const QString &wd, add_mode_t mode);  // TODO
 
-    int loadHanziCode(const QString &filename);  // TODO
-    int loadWordFreq(const QString &filename);   // TODO
+    int loadHanziCode(const QString &filename);
+    int loadWordFreq(const QString &filename);
     int loadUserWords(const QString &filename);  // TODO
 
     size_t getWordFreq(const QString &wd);    // TODO
@@ -65,7 +65,7 @@ private:
 
     bool isHanzi(const QString &hz);       // TODO
     bool isCizu(const QString &wd);        // TODO
-    bool isTextValid(const QString &txt);  // TODO
+    bool isWordValid(const QString &txt);  // TODO
 
 private:
     QMultiMap<QString, QString> hanzi_code;

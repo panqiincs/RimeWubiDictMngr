@@ -31,3 +31,34 @@ int RimeWubiDictMngr::loadHanziCode(const QString &filename)
 
     return hanzi_set.size();
 }
+
+int RimeWubiDictMngr::loadWordFreq(const QString &filename)
+{
+    QFile infile(filename);
+    if (!infile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "In loadWordFreq(), openning file" << filename <<  "failed!";
+        return -1;
+    }
+
+    QTextStream in(&infile);
+    while (!in.atEnd()) {
+        QString line = in.readLine();
+        QStringList list = line.split(QRegExp("\\s+"), QString::SkipEmptyParts);
+        if (list.size() != 2) {
+            qDebug() << "In loadWordFreq(), invalid line: " << line;
+            continue;
+        }
+
+        QString word = list[0];
+        if (!isWordValid(word)) {
+            qDebug() << "In loadWordFreq()," << word << "contains non-hanzi";
+            continue;
+        }
+        size_t weight = list[1].toULong();
+        word_freq[word] = weight;
+        word_set.insert(word);
+    }
+    infile.close();
+
+    return word_set.size();
+}
