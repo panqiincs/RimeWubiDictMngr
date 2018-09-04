@@ -41,6 +41,32 @@ int RimeWubiDictMngr::loadMainDict(const QString &filename)
     return main_dict.size();
 }
 
+int RimeWubiDictMngr::extendMainDict(const QString &filename, RimeWubiDictMngr::add_mode_t mode)
+{
+    Q_ASSERT(!word_freq.empty());
+    Q_ASSERT(!hanzi_code.empty());
+
+    int ret = loadUserWords(filename);
+    if (ret == -1) {
+        qDebug() << "In extendMainDict(), load user words failed!";
+        return -1;
+    }
+
+    for (auto word : user_words) {
+        size_t weight;
+        if (word_set.contains(word)) {
+            weight = word_freq.value(word);
+        }
+
+        QVector<QPair<QString, size_t>> code_weight_list = getWordCodeWeight(word, mode);
+        for (auto &cw : code_weight_list) {
+            QPair<QString, QPair<QString, size_t>> item(word, cw);
+            main_dict.push_back(item);
+            main_dict_set.insert(word);
+        }
+    }
+}
+
 QVector<QPair<QString, size_t> > RimeWubiDictMngr::calWordCodeWeight(const QString &wd, RimeWubiDictMngr::add_mode_t mode)
 {
     QVector<QPair<QString, size_t>> res;
@@ -241,6 +267,21 @@ bool RimeWubiDictMngr::isWordValid(const QString &wd)
 
     for (int i = 0; i < wd.length(); ++i) {
         if (!hanzi_set.contains(QString(wd[i]))) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool RimeWubiDictMngr::isCodeValid(const QString &c)
+{
+    if (c.length() < 1 || c.length() > 4) {
+        return false;
+    }
+
+    for (int i = 0; i < c.length(); ++i) {
+        if (!c[i].isLetter()) {
             return false;
         }
     }

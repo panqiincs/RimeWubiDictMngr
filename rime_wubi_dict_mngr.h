@@ -46,7 +46,7 @@ public:
     int saveMainDict(const QString &filename);  // TODO
     int saveUserDict(const QString &filename);  // TODO
 
-    int extendMainDict(const QString &filename, add_mode_t mode);  // TODO
+    int extendMainDict(const QString &filename, add_mode_t mode);
 
 private:
     QVector<QPair<QString, size_t>> calWordCodeWeight(const QString &wd, add_mode_t mode);
@@ -60,6 +60,7 @@ private:
     QString     getCizuCode(const QString &cz);
 
     bool isWordValid(const QString &wd);
+    bool isCodeValid(const QString &c);
     bool isHanzi(const QString &wd);
 
 private:
