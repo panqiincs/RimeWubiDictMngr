@@ -16,6 +16,17 @@ int RimeWubiDictMngr::loadMainDict(const QString &filename)
     main_dict.clear();
     main_dict_set.clear();
 
+    // 添加编码表中的所有汉字到字典
+    for (auto it = hanzi_code.cbegin(); it != hanzi_code.cend(); ++it) {
+        QString hanzi = it.key();
+        QVector<QPair<QString, size_t> > code_weight = getHanziCodeWeight(hanzi);
+        for (auto &cw : code_weight) {
+            QPair<QString, QPair<QString, size_t>> item(hanzi, cw);
+            main_dict.push_back(item);
+            main_dict_set.insert(hanzi);
+        }
+    }
+
     QTextStream in(&infile);
     while (!in.atEnd()) {
         QString line = in.readLine();
@@ -24,13 +35,16 @@ int RimeWubiDictMngr::loadMainDict(const QString &filename)
             continue;
         }
         QString word = list[0];
+        if (main_dict_set.contains(word)) {
+            continue;
+        }
         QString code = list[1].toLower();
         if (!isWordValid(word) || !isCodeValid(code)) {
             qDebug() << "In loadMainDict(), invaid dict item:" << line;
             continue;
         }
-
         size_t weight = list[2].toULong();
+
         QPair<QString, size_t> code_weight(code, weight);
         QPair<QString, QPair<QString, size_t>> item(word, code_weight);
         main_dict.push_back(item);
@@ -56,6 +70,8 @@ int RimeWubiDictMngr::extendMainDict(const QString &filename, RimeWubiDictMngr::
         size_t weight;
         if (word_set.contains(word)) {
             weight = word_freq.value(word);
+        } else {
+
         }
 
         QVector<QPair<QString, size_t>> code_weight_list = getWordCodeWeight(word, mode);
@@ -67,41 +83,31 @@ int RimeWubiDictMngr::extendMainDict(const QString &filename, RimeWubiDictMngr::
     }
 }
 
-QVector<QPair<QString, size_t> > RimeWubiDictMngr::calWordCodeWeight(const QString &wd, RimeWubiDictMngr::add_mode_t mode)
+QVector<QPair<QString, size_t> > RimeWubiDictMngr::getHanziCodeWeight(const QString &hz)
 {
+    Q_ASSERT(isHanzi(hz));
+
     QVector<QPair<QString, size_t>> res;
 
-    size_t freq = word_freq.value(wd);
-    QPair<QString, size_t> item;
-
-    if (isHanzi(wd)) {  // 单字
-        QStringList all_code = getHanziAllCode(wd);
-        // 找到最小长度的编码
-        int min_len = 5;
-        for (auto &code : all_code) {
-            if (code.length() < min_len) {
-                min_len = code.length();
-            }
+    QStringList all_code = getHanziAllCode(hz);
+    // 找到最小长度的编码
+    int min_len = 5;
+    for (auto &code : all_code) {
+        if (code.length() < min_len) {
+            min_len = code.length();
         }
-        Q_ASSERT(min_len > 0 && min_len < 5);
+    }
+    Q_ASSERT(min_len > 0 && min_len < 5);
 
-        // 编码最短的权重最大，编码最长权重越小
-        for (auto &code : all_code) {
-            float factor = 1.0 - (code.length()-min_len) * 0.2;
-            size_t weight = (size_t)(factor * freq);
-            if (weight < 1000) {
-                weight = 0;
-            }
-
-            item.first = code;
-            item.second = weight;
-            res.push_back(item);
+    // 编码最短的权重最大，编码最长权重越小
+    size_t freq = word_freq.value(hz);
+    for (auto &code : all_code) {
+        float factor = 1.0 - (code.length()-min_len) * 0.2;
+        size_t weight = (size_t)(factor * freq);
+        if (weight < 1000) {
+            weight = 0;
         }
-    } else {  // 词组
-        QString one_code = getCizuCode(wd);
-
-        item.first = one_code;
-        item.second = freq;
+        QPair<QString, size_t> item(code, weight);
         res.push_back(item);
     }
 

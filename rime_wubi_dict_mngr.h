@@ -49,7 +49,7 @@ public:
     int extendMainDict(const QString &filename, add_mode_t mode);
 
 private:
-    QVector<QPair<QString, size_t>> calWordCodeWeight(const QString &wd, add_mode_t mode);
+    QVector<QPair<QString, size_t>> getHanziCodeWeight(const QString &hz);
 
     int loadHanziCode(const QString &filename);
     int loadWordFreq(const QString &filename);
