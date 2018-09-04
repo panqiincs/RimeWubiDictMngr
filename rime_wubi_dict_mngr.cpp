@@ -288,3 +288,23 @@ bool RimeWubiDictMngr::isHanzi(const QString &wd)
     return (wd.length() == 1);
 }
 
+int RimeWubiDictMngr::saveDict(QVector<QPair<QString, QPair<QString, size_t> > > &dict, const QString &filename)
+{
+    QFile outfile(filename);
+    if (!outfile.open(QIODevice::ReadWrite | QFile::Truncate)) {
+        qDebug() << "In saveDict(), openning file" << filename << "failed!";
+        return -1;
+    }
+
+    QTextStream ts(&outfile);
+    for (int index = 0; index < dict.size(); ++index) {
+        QString word  = dict.at(index).first;
+        QString code  = dict.at(index).second.first;
+        size_t weight = dict.at(index).second.second;
+        ts << word << "\t" << code << "\t" << weight << endl;
+    }
+    outfile.close();
+
+    return dict.size();
+}
+

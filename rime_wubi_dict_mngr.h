@@ -63,6 +63,8 @@ private:
     bool isCodeValid(const QString &c);
     bool isHanzi(const QString &wd);
 
+    int saveDict(QVector<QPair<QString, QPair<QString, size_t>>> &dict, const QString &filename);
+
 private:
     QMultiMap<QString, QString> hanzi_code;
     QSet<QString>               hanzi_set;
