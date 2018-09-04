@@ -67,19 +67,7 @@ int RimeWubiDictMngr::extendMainDict(const QString &filename, RimeWubiDictMngr::
     }
 
     for (auto word : user_words) {
-        size_t weight;
-        if (word_set.contains(word)) {
-            weight = word_freq.value(word);
-        } else {
 
-        }
-
-        QVector<QPair<QString, size_t>> code_weight_list = getWordCodeWeight(word, mode);
-        for (auto &cw : code_weight_list) {
-            QPair<QString, QPair<QString, size_t>> item(word, cw);
-            main_dict.push_back(item);
-            main_dict_set.insert(word);
-        }
     }
 }
 
