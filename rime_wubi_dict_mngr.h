@@ -55,13 +55,13 @@ private:
     int loadWordFreq(const QString &filename);
     int loadUserWords(const QString &filename);
 
-    QStringList getHanziAllCode(const QString &hz);   // TODO
-    QString     getHanziFullcode(const QString &hz);  // TODO
-    QString     getCizuCode(const QString &cz);       // TODO
+    QStringList getHanziAllCode(const QString &hz);
+    QString     getHanziFullcode(const QString &hz);
+    QString     getCizuCode(const QString &cz);
 
     bool isHanzi(const QString &hz);       // TODO
     bool isCizu(const QString &wd);        // TODO
-    bool isWordValid(const QString &txt);  // TODO
+    bool isWordValid(const QString &wd);
 
 private:
     QMultiMap<QString, QString> hanzi_code;

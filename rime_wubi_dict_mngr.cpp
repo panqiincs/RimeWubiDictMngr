@@ -115,3 +115,58 @@ QString RimeWubiDictMngr::getHanziFullcode(const QString &hz)
 
     return res;
 }
+
+QString RimeWubiDictMngr::getCizuCode(const QString &cz)
+{
+    Q_ASSERT(cz.length() > 1);
+
+    QString res;
+
+    size_t word_len = cz.length();
+    if (word_len == 2) {
+        // 二字词：取每个字全码的前两个码组成，共4码
+        QString hanzicode1 = getHanziFullcode(cz[0]);
+        QString hanzicode2 = getHanziFullcode(cz[1]);
+        res.append(hanzicode1[0]);
+        res.append(hanzicode1[1]);
+        res.append(hanzicode2[0]);
+        res.append(hanzicode2[1]);
+    } else if (word_len == 3) {
+        // 三字词：前两个字，各取第一个码，最后一字取前两个码，共4码
+        QString hanzicode1 = getHanziFullcode(cz[0]);
+        QString hanzicode2 = getHanziFullcode(cz[1]);
+        QString hanzicode3 = getHanziFullcode(cz[2]);
+        res.append(hanzicode1[0]);
+        res.append(hanzicode2[0]);
+        res.append(hanzicode3[0]);
+        res.append(hanzicode3[1]);
+    } else {
+        // 四字词或四字以上的词：
+        // 取第一、二、三及最后一个汉字的第一码，共4码
+        QString hanzicode1 =getHanziFullcode(cz[0]);
+        QString hanzicode2 =getHanziFullcode(cz[1]);
+        QString hanzicode3 =getHanziFullcode(cz[2]);
+        QString hanzicode4 =getHanziFullcode(cz[cz.length()-1]);
+        res.append(hanzicode1[0]);
+        res.append(hanzicode2[0]);
+        res.append(hanzicode3[0]);
+        res.append(hanzicode4[0]);
+    }
+
+    return res;
+}
+
+bool RimeWubiDictMngr::isWordValid(const QString &wd)
+{
+    if (wd.size() == 0) {
+        return false;
+    }
+
+    for (int i = 0; i < wd.length(); ++i) {
+        if (!hanzi_set.contains(QString(wd[i]))) {
+            return false;
+        }
+    }
+
+    return true;
+}
