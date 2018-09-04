@@ -89,6 +89,7 @@ int RimeWubiDictMngr::loadMainDict(const QString &filename)
 int RimeWubiDictMngr::saveMainDict(const QString &filename)
 {
     std::sort(main_dict.begin(), main_dict.end(), isSmaller);
+
     int ret = saveDict(main_dict, filename);
 
     return ret;
@@ -112,19 +113,15 @@ int RimeWubiDictMngr::extendMainDict(const QString &filename, RimeWubiDictMngr::
             continue;
         }
 
-        Q_ASSERT(word.length() > 1);
-
         size_t weight;
         if (word_set.contains(word)) {
             weight = word_freq.value(word);
         } else {
-            qDebug() << "In extendMainDict, not in word freq:" << word;
+            //qDebug() << "In extendMainDict()," << word << "not in word freq";
             if (mode == ADD_HIGHFREQ) {
                 continue;
             } else if (mode == ADD_EVERYONE) {
                 weight = 1000;
-            } else {
-
             }
         }
 
@@ -245,7 +242,7 @@ int RimeWubiDictMngr::loadUserWords(const QString &filename)
         QStringList list = line.split(QRegExp("\\s+"), QString::SkipEmptyParts);
         for (auto &word : list) {
             if (!isWordValid(word) || isHanzi(word) || user_words.contains(word)) {
-                qDebug() << "In loadUserWords: ignore the word" << word;
+                //qDebug() << "In loadUserWords: ignore the word" << word;
                 continue;
             }
             user_words.append(word);

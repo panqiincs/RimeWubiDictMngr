@@ -14,6 +14,7 @@
 #include <QList>
 #include <QRegExp>
 #include <QDebug>
+#include <QTime>
 
 /*
  * 命名规范：
