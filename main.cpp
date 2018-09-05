@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 
     for (auto &file : user_files) {
         file = "./user/" + file;
-        int n_items = rwdm.extendMainDict(file, RimeWubiDictMngr::ADD_HIGHFREQ);
+        int n_items = rwdm.expandMainDict(file, RimeWubiDictMngr::ADD_HIGHFREQ);
         qDebug() << "In main(), loaded" << n_items << "new words from" << file;
     }
 

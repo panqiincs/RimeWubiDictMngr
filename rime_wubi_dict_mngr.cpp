@@ -102,14 +102,14 @@ int RimeWubiDictMngr::saveUserDict(const QString &filename)
     return ret;
 }
 
-int RimeWubiDictMngr::extendMainDict(const QString &filename, RimeWubiDictMngr::add_mode_t mode)
+int RimeWubiDictMngr::expandMainDict(const QString &filename, RimeWubiDictMngr::add_mode_t mode)
 {
     Q_ASSERT(!word_freq.empty());
     Q_ASSERT(!hanzi_code.empty());
 
     int ret = loadUserWords(filename);
     if (ret == -1) {
-        qDebug() << "In extendMainDict(), load user words failed!";
+        qDebug() << "In expandMainDict(), load user words failed!";
         return -1;
     }
 

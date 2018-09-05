@@ -46,7 +46,7 @@ public:
     int saveMainDict(const QString &filename);
     int saveUserDict(const QString &filename);
 
-    int extendMainDict(const QString &filename, add_mode_t mode);
+    int expandMainDict(const QString &filename, add_mode_t mode);
 
 private:
     QVector<QPair<QString, size_t>> getHanziCodeWeight(const QString &hz);
