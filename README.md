@@ -61,24 +61,24 @@ Rime的五笔输入法有个优点，它的码表中包含权重（weight）信�
 
 ### 主要功能
 
-#### 生成基础词库
+#### 扩充基础词库
 
-将QQ五笔、极点五笔等著名词库中的高频词加入到码表中。如果文件中的词汇在上面介绍的词频表中，则加入，否则忽略。使用方法如下：
+以权威的词库（如QQ五笔、极点五笔等）为参考，添加其中的高频词汇，扩充基础词库。如果文件中的词汇在上面介绍的词频表中，则加入，否则忽略。使用方法如下：
 
 ```cpp
 RimeWubiDictMngr rwdm;
 
-// 加载已有码表，可以是空文件
+// 加载已有码表，可以从零开始
 rwdm.loadMainDict("wubi06.dict.yaml");
 // 扩充码表，ADD_HIGHFREQ表示只提取高频词（以词频表为依据），其它舍弃
-rwdm.extendMainDict("qq_wubi.txt", RimeWubiDictMngr::ADD_HIGHFREQ);
+rwdm.expandMainDict("qq_wubi.txt", RimeWubiDictMngr::ADD_HIGHFREQ);
 // 保存码表到文件
 rwdm.saveMainDict("all.txt");
 ```
 
 #### 添加自定义词组
 
-添加用户自定义词组，例如朋友姓氏、专业词汇等。如果文件中的词汇在上面介绍的词频表中，根据词频分配权重；如果不在，分配默认权重。使用方法如下：
+添加用户自定义词组，例如朋友姓名、专业词汇等。如果文件中的词汇在上面介绍的词频表中，根据词频分配权重；如果不在，分配默认权重。使用方法如下：
 
 ```cpp
 RimeWubiDictMngr rwdm;
@@ -86,7 +86,7 @@ RimeWubiDictMngr rwdm;
 // 加载已有码表
 rwdm.loadMainDict("wubi06.dict.yaml");
 // 添加用户词汇，ADD_EVERYONE表示提取文件中所有词汇
-rwdm.extendMainDict("names.txt", RimeWubiDictMngr::ADD_EVERYONE);
+rwdm.expandMainDict("names.txt", RimeWubiDictMngr::ADD_EVERYONE);
 // 将添加进去的用户词汇单独保存
 rwdm.saveUserDict("names.dict.txt");
 // 保存总码表到文件
