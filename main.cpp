@@ -7,20 +7,27 @@ int main(int argc, char *argv[])
 
     RimeWubiDictMngr rwdm;
 
-    int n = rwdm.loadMainDict("./core/wubi06.dict.yaml");
-    qDebug() << "In main(), loaded" << n << "items from dict.";
+    QString dict_file = "./core/wubi06.dict.yaml";
+    int n = rwdm.loadMainDict(dict_file);
+    qDebug() << "In main(), loaded" << n << "items to main dict from" << dict_file;
 
-    n = rwdm.extendMainDict("./user/total.txt", RimeWubiDictMngr::ADD_HIGHFREQ);
-    qDebug() << "In main(), loaded" << n << "items from user words.";
+    QStringList user_files = {
+        "freeime.txt",
+        "qq_wubi.txt",
+        "vocab.txt",
+        "chengyu_1.txt",
+        "chengyu_2.txt"
+    };
 
-    n = rwdm.extendMainDict("./user/names.txt", RimeWubiDictMngr::ADD_EVERYONE);
-    qDebug() << "In main(), loaded" << n << "items from user words";
+    for (auto &file : user_files) {
+        file = "./user/" + file;
+        int n_items = rwdm.extendMainDict(file, RimeWubiDictMngr::ADD_HIGHFREQ);
+        qDebug() << "In main(), loaded" << n_items << "new words from" << file;
+    }
 
-    n = rwdm.saveUserDict("./names.dict.txt");
-    qDebug() << "In main(), saved" << n << "items to file";
-
-    n = rwdm.saveMainDict("out.txt");
-    qDebug() << "In main(), saved" << n << "items from main dict";
+    QString save_file = "all.txt";
+    n = rwdm.saveMainDict(save_file);
+    qDebug() << "In main(), saved" << n << "items from main dict to" << save_file;
 
     return a.exec();
 }

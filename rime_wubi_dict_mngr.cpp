@@ -125,11 +125,14 @@ int RimeWubiDictMngr::extendMainDict(const QString &filename, RimeWubiDictMngr::
         size_t weight;
         if (word_set.contains(word)) {
             weight = word_freq.value(word);
+            if (weight < THRESHOLD) {
+                continue;
+            }
         } else {
             if (mode == ADD_HIGHFREQ) {
                 continue;
             } else if (mode == ADD_EVERYONE) {
-                weight = 1000;
+                weight = THRESHOLD;
             }
         }
 
@@ -169,7 +172,7 @@ QVector<QPair<QString, size_t> > RimeWubiDictMngr::getHanziCodeWeight(const QStr
     for (auto &code : all_code) {
         float factor = 1.0 - (code.length()-min_len) * 0.2;
         size_t weight = (size_t)(factor * freq);
-        if (weight < 1000) {
+        if (weight < THRESHOLD) {
             weight = 0;
         }
         QPair<QString, size_t> item(code, weight);

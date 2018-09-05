@@ -66,6 +66,8 @@ private:
     int saveDict(QVector<QPair<QString, QPair<QString, size_t>>> &dict, const QString &filename);
 
 private:
+    const size_t THRESHOLD = 1000;
+
     QMultiMap<QString, QString> hanzi_code;
     QSet<QString>               hanzi_set;
 
