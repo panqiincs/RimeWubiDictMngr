@@ -20,9 +20,9 @@ Rime的五笔输入法有个优点，它的码表中包含权重（weight）信�
 
 ### 必需文件
 
-#### 五笔编码表
+#### 编码表
 
-不同的版本（86版、98版和新世纪版）对应不同的编码表。我学的是新世纪版五笔，需要生成其它版本的码表时，替换编码表即可。码表部分内容如下：
+汉字对应的五笔编码。不同的版本（86版、98版和新世纪版）对应不同的编码表。我学的是新世纪版五笔，需要生成其它版本的码表时，替换编码表即可。码表部分内容如下：
 
 ```yaml
 工	a
@@ -61,6 +61,32 @@ Rime的五笔输入法有个优点，它的码表中包含权重（weight）信�
 
 ### 主要功能
 
-1. 生成基础核心词库
-2. 添加用户自定义词库
+#### 生成基础词库
 
+将QQ五笔、极点五笔等著名词库中的高频词加入到码表中。如果文件中的词汇在上面介绍的词频表中，则加入，否则忽略。使用方法如下：
+
+```cpp
+RimeWubiDictMngr rwdm;
+
+// 加载已有码表，可以是空文件
+rwdm.loadMainDict("wubi06.dict.yaml");
+// 扩充码表，ADD_HIGHFREQ表示只提取高频词（以词频表为依据），其它舍弃
+rwdm.extendMainDict("qq_wubi.txt", RimeWubiDictMngr::ADD_HIGHFREQ);
+// 保存码表到文件
+rwdm.saveMainDict("all.txt");
+```
+
+#### 添加自定义词组
+
+添加用户自定义词组，例如朋友姓氏、专业词汇等。如果文件中的词汇在上面介绍的词频表中，根据词频分配权重；如果不在，分配默认权重。使用方法如下：
+
+```cpp
+RimeWubiDictMngr rwdm;
+
+// 加载已有码表
+rwdm.loadMainDict("wubi06.dict.yaml");
+// 扩充码表，ADD_EVERYONE表示提取文件中所有词汇
+rwdm.extendMainDict("qq_wubi.txt", RimeWubiDictMngr::ADD_EVERYONE);
+// 保存码表到文件
+rwdm.saveMainDict("all.txt");
+```
