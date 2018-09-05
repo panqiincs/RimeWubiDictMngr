@@ -70,7 +70,7 @@ int RimeWubiDictMngr::loadMainDict(const QString &filename)
             continue;
         }
         QString code = list[1].toLower();
-        if (!isWordValid(word) || !isCodeValid(code)) {
+        if (!isCodeValid(code)) {
             qDebug() << "In loadMainDict(), invaid dict item:" << line;
             continue;
         }
