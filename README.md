@@ -85,8 +85,10 @@ RimeWubiDictMngr rwdm;
 
 // 加载已有码表
 rwdm.loadMainDict("wubi06.dict.yaml");
-// 扩充码表，ADD_EVERYONE表示提取文件中所有词汇
-rwdm.extendMainDict("qq_wubi.txt", RimeWubiDictMngr::ADD_EVERYONE);
-// 保存码表到文件
+// 添加用户词汇，ADD_EVERYONE表示提取文件中所有词汇
+rwdm.extendMainDict("names.txt", RimeWubiDictMngr::ADD_EVERYONE);
+// 将添加进去的用户词汇单独保存
+rwdm.saveUserDict("names.dict.txt");
+// 保存总码表到文件
 rwdm.saveMainDict("all.txt");
 ```
