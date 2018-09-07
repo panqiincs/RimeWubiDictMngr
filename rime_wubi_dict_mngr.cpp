@@ -4,31 +4,31 @@ RimeWubiDictMngr::RimeWubiDictMngr()
 {
     int n = loadHanziCode("./core/hanzi_code.txt");
     qDebug() << "In constructor, loaded" << n << "hanzi code items.";
-    n = loadWordFreq("./core/word_freq_total_above_1k.txt");
+    n = loadWordFreq("./core/word_freq.txt");
     qDebug() << "In constructor, loaded" << n << "word freq items.";
 }
 
-bool isSmaller(const QPair<QString, QPair<QString, size_t>> &p1,
-               const QPair<QString, QPair<QString, size_t>> &p2)
+bool isDictItemSmaller(const QPair<QString, QPair<QString, size_t> > &p1,
+                       const QPair<QString, QPair<QString, size_t> > &p2)
 {
-    QString code1   = p1.second.first;
-    QString code2   = p2.second.first;
+    QString code1 = p1.second.first;
+    QString code2 = p2.second.first;
     if (code1 < code2) {
         return true;
     } else if (code1 > code2) {
         return false;
     }
 
-    size_t  weight1 = p1.second.second;
-    size_t  weight2 = p2.second.second;
+    size_t weight1 = p1.second.second;
+    size_t weight2 = p2.second.second;
     if (weight1 > weight2) {
         return true;
     } else if (weight1 < weight2) {
         return false;
     }
 
-    QString word1   = p1.first;
-    QString word2   = p2.first;
+    QString word1 = p1.first;
+    QString word2 = p2.first;
     return (word1 < word2);
 }
 
@@ -52,7 +52,7 @@ int RimeWubiDictMngr::loadMainDict(const QString &filename)
 
         QVector<QPair<QString, size_t> > code_weight = getHanziCodeWeight(hanzi);
         for (auto &cw : code_weight) {
-            QPair<QString, QPair<QString, size_t>> item(hanzi, cw);
+            QPair<QString, QPair<QString, size_t> > item(hanzi, cw);
             main_dict.push_back(item);
             main_dict_set.insert(hanzi);
         }
@@ -77,7 +77,7 @@ int RimeWubiDictMngr::loadMainDict(const QString &filename)
         size_t weight = list[2].toULong();
 
         QPair<QString, size_t> code_weight(code, weight);
-        QPair<QString, QPair<QString, size_t>> item(word, code_weight);
+        QPair<QString, QPair<QString, size_t> > item(word, code_weight);
         main_dict.push_back(item);
         main_dict_set.insert(word);
     }
@@ -88,7 +88,7 @@ int RimeWubiDictMngr::loadMainDict(const QString &filename)
 
 int RimeWubiDictMngr::saveMainDict(const QString &filename)
 {
-    std::sort(main_dict.begin(), main_dict.end(), isSmaller);
+    std::sort(main_dict.begin(), main_dict.end(), isDictItemSmaller);
 
     int ret = saveDict(main_dict, filename);
 
@@ -138,7 +138,7 @@ int RimeWubiDictMngr::expandMainDict(const QString &filename, RimeWubiDictMngr::
 
         QString code = getCizuCode(word);
         QPair<QString, size_t> code_weight(code, weight);
-        QPair<QString, QPair<QString, size_t>> item(word, code_weight);
+        QPair<QString, QPair<QString, size_t> > item(word, code_weight);
 
         user_dict.push_back(item);
 
@@ -155,7 +155,7 @@ QVector<QPair<QString, size_t> > RimeWubiDictMngr::getHanziCodeWeight(const QStr
 {
     Q_ASSERT(isHanzi(hz));
 
-    QVector<QPair<QString, size_t>> res;
+    QVector<QPair<QString, size_t> > res;
 
     QStringList all_code = getHanziAllCode(hz);
     // 找到最小长度的编码

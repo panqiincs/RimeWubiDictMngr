@@ -49,7 +49,7 @@ public:
     int expandMainDict(const QString &filename, add_mode_t mode);
 
 private:
-    QVector<QPair<QString, size_t>> getHanziCodeWeight(const QString &hz);
+    QVector<QPair<QString, size_t> > getHanziCodeWeight(const QString &hz);
 
     int loadHanziCode(const QString &filename);
     int loadWordFreq(const QString &filename);
@@ -63,7 +63,7 @@ private:
     bool isCodeValid(const QString &c);
     bool isHanzi(const QString &wd);
 
-    int saveDict(QVector<QPair<QString, QPair<QString, size_t>>> &dict, const QString &filename);
+    int saveDict(QVector<QPair<QString, QPair<QString, size_t> > > &dict, const QString &filename);
 
 private:
     const size_t THRESHOLD = 1000;
@@ -77,10 +77,10 @@ private:
     QStringList   user_words;
     QSet<QString> user_words_set;
 
-    QVector<QPair<QString, QPair<QString, size_t>>> main_dict;
+    QVector<QPair<QString, QPair<QString, size_t> > > main_dict;
     QSet<QString>                                   main_dict_set;
 
-    QVector<QPair<QString, QPair<QString, size_t>>> user_dict;
+    QVector<QPair<QString, QPair<QString, size_t> > > user_dict;
 
 };
 
