@@ -1,11 +1,23 @@
 #include "rime_wubi_dict_mngr.h"
 
-RimeWubiDictMngr::RimeWubiDictMngr()
+
+RimeWubiDictMngr::RimeWubiDictMngr(const QString &hanzi_code_file, const QString &word_freq_file)
 {
-    int n = loadHanziCode("./core/hanzi_code.txt");
-    qDebug() << "In constructor, loaded" << n << "hanzi code items.";
-    n = loadWordFreq("./core/word_freq.txt");
+    int m = loadHanziCode(hanzi_code_file);
+    qDebug() << "In constructor, loaded" << m << "hanzi code items.";
+    int n = loadWordFreq(word_freq_file);
     qDebug() << "In constructor, loaded" << n << "word freq items.";
+
+    if (m < 0 || n < 0) {
+        setup_success = false;
+    } else {
+        setup_success = true;
+    }
+}
+
+RimeWubiDictMngr::RimeWubiDictMngr() : RimeWubiDictMngr("./core/hanzi_code.txt", "./core/word_freq.txt")
+{
+
 }
 
 bool isDictItemSmaller(const QPair<QString, QPair<QString, size_t> > &p1,
@@ -149,6 +161,11 @@ int RimeWubiDictMngr::expandMainDict(const QString &filename, RimeWubiDictMngr::
     size_t new_size = main_dict_set.size();
 
     return (new_size - old_size);
+}
+
+bool RimeWubiDictMngr::isSetupSuccess()
+{
+    return setup_success;
 }
 
 QVector<QPair<QString, size_t> > RimeWubiDictMngr::getHanziCodeWeight(const QString &hz)
@@ -389,4 +406,3 @@ int RimeWubiDictMngr::saveDict(QVector<QPair<QString, QPair<QString, size_t> > >
 
     return dict.size();
 }
-

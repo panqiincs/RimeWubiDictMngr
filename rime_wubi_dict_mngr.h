@@ -33,6 +33,7 @@
 class RimeWubiDictMngr
 {
 public:
+    RimeWubiDictMngr(const QString &, const QString &);
     RimeWubiDictMngr();
 
 public:
@@ -49,6 +50,8 @@ public:
     int expandMainDict(const QString &filename, add_mode_t mode);
 
 private:
+    bool isSetupSuccess();
+
     QVector<QPair<QString, size_t> > getHanziCodeWeight(const QString &hz);
 
     int loadHanziCode(const QString &filename);
@@ -66,6 +69,8 @@ private:
     int saveDict(QVector<QPair<QString, QPair<QString, size_t> > > &dict, const QString &filename);
 
 private:
+    bool setup_success = false;
+
     const size_t THRESHOLD = 1000;
 
     QMultiMap<QString, QString> hanzi_code;
