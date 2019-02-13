@@ -141,9 +141,9 @@ int RimeWubiDictMngr::expandMainDict(const QString &filename, RimeWubiDictMngr::
                 continue;
             }
         } else {
-            if (mode == ADD_HIGHFREQ) {
+            if (mode == ADD_HIGH) {
                 continue;
-            } else if (mode == ADD_EVERYONE) {
+            } else if (mode == ADD_ALL) {
                 weight = THRESHOLD;
             }
         }

@@ -38,8 +38,8 @@ public:
 
 public:
     typedef enum {
-        ADD_EVERYONE,
-        ADD_HIGHFREQ
+        ADD_ALL,
+        ADD_HIGH
     } add_mode_t;
 
 public:
