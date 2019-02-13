@@ -127,7 +127,7 @@ int RimeWubiDictMngr::expandMainDict(const QString &filename, RimeWubiDictMngr::
 
     user_dict.clear();
 
-    size_t old_size = main_dict_set.size();
+    auto old_size = main_dict_set.size();
 
     for (auto word : user_words) {
         if (main_dict_set.contains(word)) {
@@ -158,7 +158,7 @@ int RimeWubiDictMngr::expandMainDict(const QString &filename, RimeWubiDictMngr::
         main_dict_set.insert(word);
     }
 
-    size_t new_size = main_dict_set.size();
+    auto new_size = main_dict_set.size();
 
     return (new_size - old_size);
 }
@@ -187,8 +187,8 @@ QVector<QPair<QString, size_t> > RimeWubiDictMngr::getHanziCodeWeight(const QStr
     // 编码最短的权重最大，编码最长权重越小
     size_t freq = word_freq.value(hz);
     for (auto &code : all_code) {
-        float factor = 1.0 - (code.length()-min_len) * 0.2;
-        size_t weight = (size_t)(factor * freq);
+        double factor = 1.0 - (code.length()-min_len) * 0.2;
+        size_t weight = static_cast<size_t>(factor * freq);
         if (weight < THRESHOLD) {
             weight = 0;
         }
@@ -318,7 +318,7 @@ QString RimeWubiDictMngr::getCizuCode(const QString &cz)
 
     QString res;
 
-    size_t word_len = cz.length();
+    auto word_len = cz.length();
     if (word_len == 2) {
         // 二字词：取每个字全码的前两个码组成，共4码
         QString hanzicode1 = getHanziFullcode(cz[0]);

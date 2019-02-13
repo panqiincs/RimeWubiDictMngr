@@ -83,7 +83,7 @@ private:
     QSet<QString> user_words_set;
 
     QVector<QPair<QString, QPair<QString, size_t> > > main_dict;
-    QSet<QString>                                   main_dict_set;
+    QSet<QString>                                     main_dict_set;
 
     QVector<QPair<QString, QPair<QString, size_t> > > user_dict;
 
