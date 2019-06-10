@@ -15,7 +15,8 @@ RimeWubiDictMngr::RimeWubiDictMngr(const QString &hanzi_code_file, const QString
     }
 }
 
-RimeWubiDictMngr::RimeWubiDictMngr() : RimeWubiDictMngr("./core/hanzi_code.txt", "./core/word_freq.txt")
+RimeWubiDictMngr::RimeWubiDictMngr() : RimeWubiDictMngr("/home/krist/Downloads/wubi/resource/hanzi_code.txt",
+                                                        "/home/krist/Downloads/wubi/resource/word_freq.txt")
 {
 
 }
@@ -184,10 +185,10 @@ QVector<QPair<QString, size_t> > RimeWubiDictMngr::getHanziCodeWeight(const QStr
     }
     Q_ASSERT(min_len > 0 && min_len < 5);
 
-    // 编码最短的权重最大，编码最长权重越小
+    // 编码最长的权重最大，编码最短的权重越小
     size_t freq = word_freq.value(hz);
     for (auto &code : all_code) {
-        double factor = 1.0 - (code.length()-min_len) * 0.2;
+        double factor = 1.0 + (code.length()-min_len) * 0.1;
         size_t weight = static_cast<size_t>(factor * freq);
         if (weight < THRESHOLD) {
             weight = 0;

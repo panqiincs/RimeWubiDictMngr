@@ -1,31 +1,16 @@
 # Rime dictionary: wubi06
 # encoding: utf-8
 #
-# Changelog
+# Changelog:
 #
 # Krist Pan <panqihg@hotmail.com>
-#     - Regenerate table from word freqency and jishuang table.
-# Weizhong Tu <tuweizhong@163.com>
-#     - fix code for words contains "民".
-# Gong Chen <chen.sst@gmail.com>
-#     - Convert to Rime dictionary format.
-# Yu Yuwei <acevery@gmail.com>
-#     - Use original level 1 and 2 JianMa.
-# Yu Yuwei <acevery@gmail.com>
-#     - Update to Jidian 6, provided by Chen Xing
-# Yu Yuwei <acevery@gmail.com>
-#     - Add freqs from google.
-#     - Fix punctuation freqs
-# Chen Xing <cxcxcxcx@gmail.com>
-#     - Convert from JidianWubi table
+#     - Generate table from qqwubi and jishuang word list.
 #
-# Original table author
-# Wozy <wozy.in@gmail.com>
 
 ---
 
 name: wubi06
-version: "0.1"
+version: "1.0"
 sort: by_weight
 columns:
   - text
@@ -43,4 +28,3 @@ encoder:
     - length_in_range: [4, 10]
       formula: "AaBaCaZa"
 ...
-
