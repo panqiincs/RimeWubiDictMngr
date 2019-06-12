@@ -136,10 +136,15 @@ int RimeWubiDictMngr::expandMainDict(const QString &filename, RimeWubiDictMngr::
         }
 
         size_t weight;
+
         if (word_set.contains(word)) {
             weight = word_freq.value(word);
             if (weight < THRESHOLD) {
-                continue;
+                if (mode == ADD_HIGH) {
+                    continue;
+                } else if (mode == ADD_ALL) {
+                    weight = THRESHOLD;
+                }
             }
         } else {
             if (mode == ADD_HIGH) {
