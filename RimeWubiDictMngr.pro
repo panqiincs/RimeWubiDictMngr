@@ -20,3 +20,6 @@ SOURCES += \
 
 HEADERS += \
     rime_wubi_dict_mngr.h
+
+RESOURCES += \
+    resource.qrc

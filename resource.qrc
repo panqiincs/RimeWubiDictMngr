@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resource/hanzi_code.txt</file>
+        <file>resource/word_freq.txt</file>
+        <file>resource/wubi06.dict.yaml</file>
+        <file>resource/wubi06.dict.yaml.head</file>
+        <file>resource/wubi06.dict.yaml.tail</file>
+        <file>words/ciku_qq.txt</file>
+        <file>words/user.txt</file>
+    </qresource>
+</RCC>
