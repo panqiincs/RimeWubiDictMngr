@@ -22,7 +22,7 @@ Rime的五笔输入法有个优点，它的码表中包含权重（weight）信�
 
 #### 编码表
 
-汉字对应的五笔编码。不同的版本（86版、98版和新世纪版）对应不同的编码表。我学的是新世纪版五笔，需要生成其它版本的码表时，替换编码表即可。码表部分内容如下：
+汉字对应的五笔编码，包括全码和简码。不同的版本（86版、98版和新世纪版）对应不同的编码表。我学的是新世纪版五笔，需要生成其它版本的码表时，替换编码表即可。软件用到的编码文件是`resource/hanzi_code.txt`，包括GB18030-2000标准的27533个汉字，参考了CNMan整理的[新世纪版五笔字型超大字符集编码](https://github.com/CNMan/UnicodeCJK-WuBi06)。码表部分内容如下：
 
 ```yaml
 工	a
@@ -31,7 +31,9 @@ Rime的五笔输入法有个优点，它的码表中包含权重（weight）信�
 㠭	aaaa
 工	aaaa
 㐂	aaab
-# 由于版权原因，后面的内容不展示
+...
+...省略几千行...
+...
 ```
 
 #### 词频表
@@ -85,7 +87,7 @@ RimeWubiDictMngr rwdm;
 
 // 加载已有码表
 rwdm.loadMainDict("wubi06.dict.yaml");
-// 添加用户词汇，ADD_ALL表示提取文件中所有词汇
+// 添加用户词汇，ADD_ALL表示提取所有词汇
 rwdm.expandMainDict("names.txt", RimeWubiDictMngr::ADD_ALL);
 // 将添加进去的用户词汇单独保存
 rwdm.saveUserDict("names.dict.txt");
